@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【練習用】ページが見つかりません｜株式会社 丸翔</title>
+<meta name="description" content="お探しのページは見つかりませんでした。株式会社 丸翔（丸翔リフォーム）のトップページから、施工事例・費用・お問い合わせをご覧いただけます。">
+
+<meta name="robots" content="noindex,nofollow">
+
+<!-- ===== OGP ===== -->
+<!-- 最初の画面で使う書体を先に取りにいく（900は見出し、400は本文） -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/marusho-renshu/fonts/noto-sans-jp-900.woff2?v=20260916e">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/marusho-renshu/fonts/noto-sans-jp-400.woff2?v=20260916e">
+<link rel="stylesheet" href="/marusho-renshu/style.css?v=20260918a">
+
+<!-- ===== 練習用サイトの目印（tools/練習用サイト_作成.py が入れています） ===== -->
+<style>
+  body { padding-top: 34px !important; }
+  .site-header { top: 34px !important; }
+  #renshu-banner {
+    position: fixed; top: 0; left: 0; right: 0; height: 34px; z-index: 500;
+    background: #B3261E; color: #fff; text-align: center;
+    font: bold 13px/34px "Meiryo", sans-serif;
+    letter-spacing: .02em; overflow: hidden; white-space: nowrap;
+  }
+  #renshu-banner .renshu-short { display: none; }
+  @media (max-width: 720px) {
+    #renshu-banner { font-size: 11px; }
+    #renshu-banner .renshu-long { display: none; }
+    #renshu-banner .renshu-short { display: inline; }
+  }
+</style>
+</head>
+<body>
+
+<div id="renshu-banner">
+  <span class="renshu-long">練習用サイト ― 本番ではありません。ここで何をしても、お客様が見るホームページは変わりません。</span>
+  <span class="renshu-short">練習用サイト ― 本番ではありません</span>
+</div>
+<script>
+  /* 練習用サイト：お問い合わせが本番に飛ばないよう、送信そのものを止めています。
+     捕捉フェーズで止めるので、ページ側の送信処理は動きません。 */
+  document.addEventListener('submit', function (e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    alert('ここは練習用サイトです。お問い合わせは送信されません。');
+  }, true);
+</script>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/marusho-renshu/" class="brand">
+      <img src="/marusho-renshu/lp_ui_assets_png/brand/logo_marusho.png?v=20260916b" alt="株式会社 丸翔" class="brand-logo" width="420" height="177">
+    </a>
+    <div class="header-right">
+      <div class="header-phone">
+        <img src="/marusho-renshu/lp_ui_assets_png/icons/icon_phone.png" alt="" width="128" height="128">
+        <div class="header-phone-text">
+          <span class="num"><small class="ph-label">（代表）</small>0246-84-5557</span>
+          <span class="num"><small class="ph-label">（携帯）</small>090-2025-3104</span>
+          <span class="hours">受付 10:00～18:00（火曜定休）</span>
+        </div>
+      </div>
+      <a href="/marusho-renshu/" class="btn btn-orange header-cta">トップページへ戻る</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 404 ===== -->
+<section class="legal">
+  <div class="container">
+    <div class="legal-head">
+      <h1>ページが見つかりません</h1>
+      <span class="en">404 NOT FOUND</span>
+    </div>
+
+    <p class="legal-lead">
+      お探しのページは、移動または削除された可能性があります。<br>
+      URLをお確かめのうえ、下のご案内からお進みください。
+    </p>
+
+    <div class="legal-block">
+      <h2>よくご覧いただくページ</h2>
+      <ul>
+        <li><a href="/marusho-renshu/">トップページ</a></li>
+        <li><a href="/marusho-renshu/#cases">施工事例</a></li>
+        <li><a href="/marusho-renshu/#service">選ばれる理由</a></li>
+        <li><a href="/marusho-renshu/#pricing">費用・見積り</a></li>
+        <li><a href="/marusho-renshu/#faq">よくあるご質問</a></li>
+        <li><a href="/marusho-renshu/#about">会社案内</a></li>
+        <li><a href="/marusho-renshu/#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+
+    <div class="legal-block">
+      <h2>お急ぎの方はお電話ください</h2>
+      <div class="legal-contact">
+        <dl>
+          <div><dt>TEL（代表）</dt><dd><a href="tel:0246845557">0246-84-5557</a></dd></div>
+          <div><dt>TEL（携帯）</dt><dd><a href="tel:09020253104">090-2025-3104</a></dd></div>
+          <div><dt>受付時間</dt><dd>10:00〜18:00（火曜定休）</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="legal-back">
+      <a href="/marusho-renshu/" class="back-home">← トップページへ戻る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-head">
+        <img src="/marusho-renshu/lp_ui_assets_png/brand/logo_marusho.png?v=20260916b" alt="株式会社 丸翔" class="footer-logo" width="420" height="177">
+      </div>
+      <p class="footer-lead">地域密着の工務店として、高品質なリフォーム工事を提供しています。小さな工事から全面リノベーションまで、住まいのことなら何でもご相談ください。</p>
+    </div>
+    <div class="footer-col">
+      <h4>会社情報</h4>
+      <dl class="footer-dl">
+        <div><dt>会社名</dt><dd>株式会社 丸翔</dd></div>
+        <div><dt>代表者</dt><dd>代表取締役 山内 寿徳</dd></div>
+      </dl>
+    </div>
+    <div class="footer-col">
+      <h4>対応エリア</h4>
+      <p class="footer-area-note">福島県いわき市全域に対応しています。</p>
+      <div class="area-tags">
+        <span>いわき市全域</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>本社所在地</h4>
+      <dl class="footer-dl footer-dl--contact">
+        <div><dt>〒</dt><dd>970-1152<br>福島県いわき市好間町中好間鍛冶内8番地</dd></div>
+        <div><dt>TEL</dt><dd>（代表）0246-84-5557<br>（携帯）090-2025-3104</dd></div>
+        <div><dt>FAX</dt><dd>0246-84-5571</dd></div>
+        <div><dt>営業時間</dt><dd>10:00～18:00</dd></div>
+        <div><dt>定休日</dt><dd>火曜日</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024-2026 丸翔リフォーム All Rights Reserved.</p>
+    <p class="footer-links"><a href="/marusho-renshu/privacy.html">プライバシーポリシー</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
