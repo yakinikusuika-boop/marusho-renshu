@@ -16,7 +16,8 @@ const NEWS_ITEMS = [
     date: "2026-11-10",
     category: "お知らせ",
     title: "ここは練習用です。自由に書き替えてください",
-    body: "この台帳は練習用です。何を書いても、消しても、本番のホームページには出ません。思いきって試してください。"
+    body: "この台帳は練習用です。何を書いても、消しても、本番のホームページには出ません。思いきって試してください。",
+    image: "lp_image_assets_png/news/news-fc80dfec29_thumb.jpg"
   },
   // ---- 2件目（台帳 3行目） ----
   {
@@ -24,7 +25,10 @@ const NEWS_ITEMS = [
     until: "2027-01-05",   // 掲載終了日。翌日から過去のお知らせへ
     category: "休業案内",
     title: "年末年始の休業について（練習）",
-    body: "12月29日から1月4日まで休業いたします。新年は1月5日から通常どおり営業します。"
+    body: "12月29日から1月4日まで休業いたします。新年は1月5日から通常どおり営業します。",
+    image: "lp_image_assets_png/news/news-53e5eb4eb5_thumb.jpg",
+    link: "lp_image_assets_png/news/news-53e5eb4eb5.pdf",
+    linkText: "チラシを開く（A4・印刷／保存できます）"
   },
   // ---- 3件目（台帳 4行目） ----
   {
