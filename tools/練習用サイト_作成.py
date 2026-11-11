@@ -290,7 +290,9 @@ def transform_html(html, filename, base):
     #   href="/works/" → href="/marusho-renshu/works/"
     #   「//」で始まるもの（//example.com）は書き換えない
     prefix = "/" + base.strip("/") + "/"
-    html, n_path = re.subn(r"(href|src)=\"/(?!/)", r'\1="%s' % prefix, html)
+    # srcset も対象（/works/ の <source srcset="/…webp">。漏れると webp が404になり、
+    # ブラウザが jpg へ切り替えるまで1枚ずつむだな通信が出る）
+    html, n_path = re.subn(r"(href|src|srcset)=\"/(?!/)", r'\1="%s' % prefix, html)
     if n_path:
         note("  %s : ルート始まりのパスを %d か所 %s に直しました" % (filename, n_path, prefix))
 
@@ -456,7 +458,15 @@ def main():
     if os.path.exists(workflow):
         with open(workflow, encoding="utf-8") as handle:
             text = handle.read()
-        text = text.replace("name: お知らせ台帳の反映", "name: お知らせ台帳の反映（練習用）")
+        # 名前の先頭は「お知らせ台帳の反映」のまま変えないこと
+        # （01_引継ぎ・運用/台帳/定期実行の間隔を調べる.py が、この書き出しで実行記録を探す）
+        if "name: お知らせ台帳の反映（施工事例も）" in text:
+            text = text.replace(
+                "name: お知らせ台帳の反映（施工事例も）",
+                "name: お知らせ台帳の反映（施工事例も・練習用）",
+            )
+        else:
+            text = text.replace("name: お知らせ台帳の反映", "name: お知らせ台帳の反映（練習用）")
         with open(workflow, "w", encoding="utf-8", newline="\n") as handle:
             handle.write(text)
         note("ワークフローの名前に「（練習用）」を付けました")
