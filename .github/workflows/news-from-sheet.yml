@@ -27,7 +27,7 @@
 #       このワークフローを「失敗」にしてメールで知らせます。
 # ============================================================
 
-name: お知らせ台帳の反映
+name: お知らせ台帳の反映（練習用）
 
 on:
   schedule:
@@ -66,20 +66,7 @@ jobs:
         env:
           NEWS_SHEET_CSV_URL: ${{ secrets.NEWS_SHEET_CSV_URL }}
         run: |
-          if [ -z "$NEWS_SHEET_CSV_URL" ]; then
-            echo "::error::NEWS_SHEET_CSV_URL が未設定です。リポジトリの Secrets に台帳のCSV URLを登録してください。"
-            exit 1
-          fi
-          mkdir -p work
-          if ! curl -fsSL --retry 3 --retry-delay 5 --max-time 60 \
-                 "$NEWS_SHEET_CSV_URL" -o work/ledger_raw.csv; then
-            echo "::error::台帳を取り寄せられませんでした。news.js は書き換えていません。"
-            exit 1
-          fi
-          if [ ! -s work/ledger_raw.csv ]; then
-            echo "::error::台帳が空でした。news.js は書き換えていません。"
-            exit 1
-          fi
+          python "tools/お知らせ台帳_取り寄せ.py" --out work/ledger_raw.csv
 
       # --- 2段目 -------------------------------------------------
       - name: 写真・チラシを取り込む
