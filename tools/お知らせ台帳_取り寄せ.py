@@ -7,10 +7,13 @@
         python tools/お知らせ台帳_取り寄せ.py --out work/ledger_raw.csv
 
   なぜ curl ではなくこれを使うのか
-    curl は URL に改行やタブが混ざっていると取得できない。
-    GitHub の Secret は貼り付けのときに末尾の改行が入りやすく、実際にそれで失敗した
-    （2026-11-11）。Python の urllib は URL から改行・タブを自動で取り除くため、
-    同じ値でも成功する。ここでは加えて自分でも前後の空白と改行・タブを落としている。
+    1. 失敗の理由が分かるようにするため。curl だと「失敗した」しか残らないが、
+       これなら「HTTP 401」「HTTPが返ってきた」まで記録できる。
+       実際、2026-11-11 の不具合はこのログで 401 と判明した。
+    2. curl は URL に改行やタブが混ざっていると、それだけで取得できない
+       （exit 3: Malformed input）。GitHub の Secret は貼り付けのときに
+       末尾の改行が入りやすい。Python の urllib は改行・タブを自動で取り除くうえ、
+       ここでは自分でも前後の空白と改行・タブを落としている。
 
   安全のための決めごと
     ・取得できなかった／中身が空だったときは終了コード 1。出力ファイルは作らない。
@@ -46,6 +49,17 @@ def clean_url(raw):
     return re.sub(r"[\r\n\t]", "", (raw or "").strip())
 
 
+def url_kind(url):
+    """URLの種類だけを言う。URL自体はログに出さない。"""
+    if "/spreadsheets/d/e/" in url and "/pub" in url:
+        return "ウェブに公開（pub）"
+    if "/gviz/" in url:
+        return "gviz ※共有設定しだいで匿名では読めません。「ウェブに公開」のURLを使ってください"
+    if "/export" in url:
+        return "export ※共有設定しだいで匿名では読めません。「ウェブに公開」のURLを使ってください"
+    return "その他"
+
+
 def fetch(url):
     """台帳のCSVを取ってくる。失敗したら数秒おいて繰り返す。"""
     last_error = ""
@@ -57,6 +71,11 @@ def fetch(url):
         except urllib.error.HTTPError as error:
             # 404・401 などは繰り返しても直らないので、その場で諦める
             last_error = "HTTP %s %s" % (error.code, error.reason)
+            if error.code in (401, 403):
+                last_error += (
+                    "（匿名では読めない状態です。台帳の「ファイル → 共有 → ウェブに公開」が"
+                    "止まっていないか確認してください）"
+                )
             if error.code < 500:
                 break
         except Exception as error:  # 通信の失敗・時間切れなど
@@ -89,9 +108,16 @@ def main():
             % ENV_NAME
         )
 
+    print("URLの形: %s" % url_kind(url), flush=True)
+
     raw = fetch(url)
     if not raw.strip():
         die("台帳が空でした。news.js は書き換えていません。")
+    if raw.lstrip()[:1] == b"<":
+        die(
+            "台帳のCSVではなく、HTMLのページが返ってきました。"
+            "「ウェブに公開」のURL（.../pub?...output=csv）か確認してください。"
+        )
 
     folder = os.path.dirname(os.path.abspath(args.out))
     if folder:
@@ -99,7 +125,7 @@ def main():
     with open(args.out, "wb") as handle:
         handle.write(raw)
 
-    print("台帳を取り寄せました（%d バイト）" % len(raw))
+    print("台帳を取り寄せました（%d バイト）" % len(raw), flush=True)
 
 
 if __name__ == "__main__":
